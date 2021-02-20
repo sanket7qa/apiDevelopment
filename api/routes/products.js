@@ -21,8 +21,7 @@ router.post('/',(req,res,next) =>
     res.status(201).json(
         {
             message: 'Handling POST request',
-            createdProduct: product,
-            createdAt: Date()
+            createdProduct: product
         });
 });
 
