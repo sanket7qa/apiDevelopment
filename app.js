@@ -12,19 +12,10 @@ app.use(morgan('dev')); // Middleware for logging
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use((req,res,next) =>
-{
-    if(req.method==='OPTIONS')
-    {
-        res.header('Access-Control-Allow-Methods','PUT,GET,PATCH,DELETE,POST')
-        return res.status(200).json({});
-    }
-});
 //Middleware : incoming request will pass to this
-//anything that hit URL/product will goes to productRoutes from routes.js
+//anything that hit URL/product will goes to productRoutes from routes
 app.use('/products',productRoutes);
-app.use('/orders',orderRoutes);
-
+app.use('/orders',orderRoutes); 
 
 app.use((req,res,next) => 
 {

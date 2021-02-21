@@ -2,6 +2,8 @@ const express = require('express');
 // Using as FUNCTION : Help us to route to different HTTP verbs 
 const router = express.Router();
 
+
+
 //Help to handle GET method
 router.get('/',(req,res,next) => 
 {
@@ -14,14 +16,23 @@ router.get('/',(req,res,next) =>
 
 router.post('/',(req,res,next) => 
 {
+    //Middleware concept : Anything between request -> Response : Program/function/software entity
+    console.log('Request from:' + req.originalUrl);
+    req.root = req.protocol + '://' + req.get('host') + '/';
+    next(); // If you remove this, request will never complete
+}, (req,res, next) =>{
+
     const product = {
         name: req.body.name,
         price: req.body.price
     };
+
     res.status(201).json(
         {
             message: 'Handling POST request',
-            createdProduct: product
+            createProduct: product,
+            created_date: Date(),
+            reqDetails: req.root
         });
 });
 

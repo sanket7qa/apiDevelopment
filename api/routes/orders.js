@@ -16,10 +16,11 @@ router.post('/',(req,res,next) =>
         productId: req.body.productId,
         quantity: req.body.quantity
     };
-    res.status(201).json(
+       res.status(201).json(
         {
             message : "Orders are creted",
-            order: order
+            createdOrder: order,
+            created_date: Date()
         });
 });                            
 
