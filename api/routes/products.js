@@ -1,7 +1,8 @@
 const express = require('express');
 // Using as FUNCTION : Help us to route to different HTTP verbs 
 const router = express.Router();
-
+const mongoose = require('mongoose');
+const Product = require('../models/product');
 
 
 //Help to handle GET method
@@ -22,16 +23,26 @@ router.post('/',(req,res,next) =>
     next(); // If you remove this, request will never complete
 }, (req,res, next) =>{
 
-    const product = {
-        name: req.body.name,
-        price: req.body.price
-    };
+    const product = new Product(
+        {
+            _id: new mongoose.Types.ObjectId(),
+            name: req.body.name,
+            price: req.body.price
+        }
+    );
+    //This is promise
+    product
+        .save()
+        .then(result=>{
+        console.log(result);
+    })
+    .catch(err => console.log(err));
 
     res.status(201).json(
         {
             message: 'Handling POST request',
             createProduct: product,
-            created_date: Date(),
+            created_date: Date.now(),
             reqDetails: req.root
         });
 });

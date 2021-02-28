@@ -3,10 +3,18 @@ const app = express();
 // Logger purpose  Middlewear
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 //import product routes
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+mongoose.connect('mongodb://localhost:27017/APITEST', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connection
+    .once("open",() =>console.log("Connection Successful"))
+    .on("error", error => {
+        console.log("Your error",error);
+    });
 
 app.use(morgan('dev')); // Middleware for logging
 app.use(bodyParser.urlencoded({extended: false}));
